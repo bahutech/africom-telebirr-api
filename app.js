@@ -31,9 +31,9 @@ app.post("/create/order", function (req, res) {
 });
 
 //for testing
-// app.get("/api/listen", (req, res) => {
-//   res.status(200).json({ reqRes: "Send the data" });
-// });
+ app.get("/api/listen", (req, res) => {
+   res.status(200).json({ reqRes: "Send the data" });
+ });
 
 app.post("/api/v1/notify", (req, res) => {
   console.log("Notify Response Hits HERE!");
