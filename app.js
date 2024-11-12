@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+var request = require('request');
 var app = express();
 const { signString } = require("./utils/tools");
 const authToken = require("./service/authTokenService");
@@ -32,6 +33,19 @@ app.post("/create/order", function (req, res) {
 
 //for testing
  app.get("/api/listen", (req, res) => {
+   var options = {
+    'method': 'POST',
+    'url': 'https://aliexpress.andagna.com/wp-json/jwt-auth/v1/token?username=hamli&password=password',
+    'headers': {
+    'Cookie': 'mailchimp_landing_site=https%3A%2F%2Faliexpress.andagna.com%2Fwp-json%2F'
+    }
+    };
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+   console.log("Token result");
+  console.log(response.body);
+});
+
    res.status(200).json({ reqRes: "Send the data" });
  });
 
