@@ -6,6 +6,29 @@ const { signString } = require("./utils/tools");
 const authToken = require("./service/authTokenService");
 const createOrder = require("./service/createOrderService");
 
+function applyUserToken() {
+  return new Promise((resolve, reject) => {
+    var options = {
+      'method': 'POST',
+  'url': 'https://aliexpress.andagna.com/wp-json/jwt-auth/v1/token?username=hamli&password=password',
+  'headers': {
+    'Cookie': 'mailchimp_landing_site=https%3A%2F%2Faliexpress.andagna.com%2Fwp-json%2F'
+  }
+    };
+    console.log(options);
+    request(options, function (error, response) {
+      if (error) throw new Error(error);
+      // console.log("***********");
+      console.log("BODY", response.body);
+      // console.log(typeof response.body);
+      let result = JSON.parse(response.body);
+      // console.log(result);
+      // console.log("*****************");
+      resolve(result);
+    });
+  });
+}
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // allow cross-origin
@@ -32,8 +55,8 @@ app.post("/create/order", function (req, res) {
 });
 
 //for testing
- app.get("/api/listen", (req, res) => {
-   var options = {
+ app.get("/api/listen", async (req, res) => {
+   /* var options = {
     'method': 'POST',
     'url': 'https://aliexpress.andagna.com/wp-json/jwt-auth/v1/token?username=hamli&password=password',
     'headers': {
@@ -44,9 +67,9 @@ request(options, function (error, response) {
   if (error) throw new Error(error);
    console.log("Token result");
   console.log(response.body);
-});
-
-   res.status(200).json({ reqRes: "Send the data" });
+}); */
+  var userToken = await applyUserToken();
+   res.status(200).json({ reqRes: "Send the data", usertoken: userToken });
  });
 
 app.post("/api/v1/notify", (req, res) => {
