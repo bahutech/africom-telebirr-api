@@ -38,11 +38,11 @@ function getProducts() {
           'pass': 'cs_97eb40b7df1e997925d5b9181f6ac080a308ac95'
       }
     };
-    console.log(options);
+    //console.log(options);
     request(options, function (error, response) {
       if (error) throw new Error(error);
       // console.log("***********");
-      console.log("BODY", response.body);
+      //console.log("BODY", response.body);
       // console.log(typeof response.body);
       let result = JSON.parse(response.body);
       // console.log(result);
@@ -61,11 +61,11 @@ function getCategory() {
           'pass': 'cs_97eb40b7df1e997925d5b9181f6ac080a308ac95'
       }
     };
-    console.log(options);
+    //console.log(options);
     request(options, function (error, response) {
       if (error) throw new Error(error);
       // console.log("***********");
-      console.log("BODY", response.body);
+      //console.log("BODY", response.body);
       // console.log(typeof response.body);
       let result = JSON.parse(response.body);
       // console.log(result);
@@ -84,11 +84,11 @@ function getOrder() {
           'pass': 'cs_97eb40b7df1e997925d5b9181f6ac080a308ac95'
       }
     };
-    console.log(options);
+    //console.log(options);
     request(options, function (error, response) {
       if (error) throw new Error(error);
       // console.log("***********");
-      console.log("BODY", response.body);
+      //console.log("BODY", response.body);
       // console.log(typeof response.body);
       let result = JSON.parse(response.body);
       // console.log(result);
@@ -135,11 +135,11 @@ function getBanners() {
     var options = {
       
     };
-    console.log(options);
+    //console.log(options);
     request(options, function (error, response) {
       if (error) throw new Error(error);
       // console.log("***********");
-      console.log("BODY", response.body);
+      //console.log("BODY", response.body);
       // console.log(typeof response.body);
       let result = JSON.parse(response.body);
       // console.log(result);
@@ -177,35 +177,35 @@ app.post("/create/order", function (req, res) {
  app.get("/api/listen", async (req, res) => {
    
   var userToken = await applyUserToken();
-   res.status(200).json({ reqRes: "Send the data", usertoken: userToken });
+   res.status(200).json({ usertoken: userToken });
  });
  //========
  //for product
  app.get("/api/products", async (req, res) => {
    
   var allProducts = await getProducts();
-   res.status(200).json({ reqRes: "product data", allProducts: allProducts });
+   res.status(200).json({ allProducts: allProducts });
  });
 
  //for categories
  app.get("/api/category", async (req, res) => {
    
   var category = await getCategory();
-   res.status(200).json({ reqRes: "category data", category: category });
+   res.status(200).json({ category: category });
  });
 
  //for banners
  app.get("/api/banners", async (req, res) => {
    
   //var userToken = await applyUserToken();
-   res.status(200).json({ reqRes: "banners data", banners: sliderList });
+   res.status(200).json({ banners: sliderList });
  });
 
  //for orders
  app.get("/api/orders", async (req, res) => {
    
   var orders = await getOrder();
-   res.status(200).json({ reqRes: "oreers data", orders: orders });
+   res.status(200).json({ orders: orders });
  });
  //========
 app.post("/api/v1/notify", (req, res) => {
