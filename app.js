@@ -47,8 +47,8 @@ function getProducts() {
       //console.log("BODY", response.body);
       // console.log(typeof response.body);
       let result = JSON.parse(response.body);
-      // console.log(result);
-      // console.log("*****************");
+       console.log(result);
+       console.log("*****************");
       resolve(result);
     });
   });
