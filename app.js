@@ -34,7 +34,7 @@ function applyUserToken() {
 function getProducts() {
   return new Promise((resolve, reject) => {
     var options = {
-      url: 'https://aliexpress.andagna.com/wp-json/wc/v3/products',
+      url: 'https://aliexpress.andagna.com/wp-json/wc/v3/products?per_page=60',
       auth: {
           'user': 'ck_f698c13cdafb13d2dcf2ba42257522537bdff188',
           'pass': 'cs_97eb40b7df1e997925d5b9181f6ac080a308ac95'
