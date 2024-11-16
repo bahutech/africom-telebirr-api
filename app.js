@@ -34,7 +34,7 @@ function applyUserToken() {
 function getProducts() {
   return new Promise((resolve, reject) => {
     var options = {
-      url: 'https://aliexpress.andagna.com/wp-json/wc/v3/products?per_page=60',
+      url: 'https://aliexpress.andagna.com/wp-json/wc/v3/products?per_page=20',
       auth: {
           'user': 'ck_f698c13cdafb13d2dcf2ba42257522537bdff188',
           'pass': 'cs_97eb40b7df1e997925d5b9181f6ac080a308ac95'
@@ -43,7 +43,7 @@ function getProducts() {
     //console.log(options);
     request(options, function (error, response) {
       if (error) throw new Error(error);
-      //console.log("***********");
+      console.log("***product fetdhed********");
       //console.log("BODY", response.body);
       // console.log(typeof response.body);
       let result = JSON.parse(response.body);
@@ -57,7 +57,7 @@ function getProducts() {
 function getCategory() {
   return new Promise((resolve, reject) => {
     var options = {
-      url: 'https://aliexpress.andagna.com/wp-json/wc/v3/products/categories?orderby=count',
+      url: 'https://aliexpress.andagna.com/wp-json/wc/v3/products/categories',
       auth: {
           'user': 'ck_f698c13cdafb13d2dcf2ba42257522537bdff188',
           'pass': 'cs_97eb40b7df1e997925d5b9181f6ac080a308ac95'
@@ -67,7 +67,7 @@ function getCategory() {
     request(options, function (error, response) {
       if (error) throw new Error(error);
       // console.log("***********");
-      //console.log("BODY", response.body);
+      console.log("BODY", response.body);
       // console.log(typeof response.body);
       let result = JSON.parse(response.body);
       // console.log(result);
