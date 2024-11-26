@@ -411,7 +411,6 @@ app.post("/api/register", async (req, res) => {
  //update customer address
  app.post("/api/address", async (req, res) => {
   console.log("RECEIVED PARAM for Address")
-  var addressData = []
   // Define the object 
   const inputObject = req.body; // Convert the object key to a string 
   const jsonString = Object.keys(inputObject)[0]; // Remove the last characters 
@@ -427,15 +426,15 @@ app.post("/api/register", async (req, res) => {
   var endPoint = "customers/" + id
   api.put(endPoint, data)
   .then((response) => {
-    addressData = response.data
+    res.status(200).json({ data: response.data });
     //console.log(response.data);
   })
   .catch((error) => {
-    addressData = error
+    res.status(200).json({ data: error.response.data });
     console.log(error.response.data);
   });
   //var customer = await getCustomerDetail(id);
-   res.status(200).json({ data: addressData });
+   
  });
  //get orders
  app.post("/api/order/list", async (req, res) => {
@@ -456,7 +455,7 @@ app.post("/api/register", async (req, res) => {
   .then((response) => {
     
     res.status(200).json({ data: response.data });
-    console.log(response.data);
+    //console.log(response.data);
   })
   .catch((error) => {
     res.status(200).json({ data: error.response.data });
