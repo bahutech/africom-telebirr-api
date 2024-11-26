@@ -2,17 +2,30 @@ const express = require("express");
 var os = require('os');
 const bodyParser = require("body-parser");
 var request = require('request');
+var WooCommerceRestApi = require('@woocommerce/woocommerce-rest-api').default;
 var app = express();
 var networkInterfaces = os.networkInterfaces();
 const { signString } = require("./utils/tools");
 const authToken = require("./service/authTokenService");
 const createOrder = require("./service/createOrderService");
 
-function applyUserToken() {
+const api = new WooCommerceRestApi({
+  url: "https://aliexpress.andagna.com",
+  consumerKey: "ck_f698c13cdafb13d2dcf2ba42257522537bdff188",
+  consumerSecret: "cs_97eb40b7df1e997925d5b9181f6ac080a308ac95",
+  version: "wc/v3"
+});
+
+function applyUserToken(username , password) {
+  console.log("Received Data =", username +"==="+ password);
+  var un = username
+  var pw = password
   return new Promise((resolve, reject) => {
+    //'https://aliexpress.andagna.com/wp-json/jwt-auth/v1/token?username=hamli&password=password'
+     
     var options = {
       'method': 'POST',
-      'url': 'https://aliexpress.andagna.com/wp-json/jwt-auth/v1/token?username=hamli&password=password',
+      'url': `https://aliexpress.andagna.com/wp-json/jwt-auth/v1/token?username=${un}&password=${pw}`,
       'headers': {
         'Cookie': 'mailchimp_landing_site=https%3A%2F%2Faliexpress.andagna.com%2Fwp-json%2F'
       }
@@ -20,7 +33,7 @@ function applyUserToken() {
     console.log(options);
     request(options, function (error, response) {
       if (error) throw new Error(error);
-      // console.log("***********");
+      console.log("****** WP TOKEN *****");
       console.log("BODY", response.body);
       // console.log(typeof response.body);
       let result = JSON.parse(response.body);
@@ -30,11 +43,45 @@ function applyUserToken() {
     });
   });
 }
-//========= get products
-function getProducts() {
+//==== signup
+function registerUser(username ,email, password) {
+  console.log("Received Data =", username +"==="+email+"====="+ password);
+  var un = username
+  var em = email
+  var pw = password
+  return new Promise((resolve, reject) => {
+    //'https://aliexpress.andagna.com/wp-json/jwt-auth/v1/token?username=hamli&password=password'
+     
+    var options = {
+      'method': 'POST',
+      'url': `https://aliexpress.andagna.com/wp-json/custom/v1/register?username=${un}&email=${em}&password=${pw}`,
+      'headers': {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'username': un,
+        'email': em,
+        'password': pw
+      }),
+    };
+    console.log(options);
+    request(options, function (error, response) {
+      if (error) resolve(error);
+      console.log("****** WP SIGNUP *****");
+      console.log("BODY", response.body);
+      // console.log(typeof response.body);
+      let result = JSON.parse(response.body);
+      // console.log(result);
+      // console.log("*****************");
+      resolve(result);
+    });
+  });
+}
+// get customer getCustomerDetail
+function getCustomerDetail(id) {
   return new Promise((resolve, reject) => {
     var options = {
-      url: 'https://aliexpress.andagna.com/wp-json/wc/v3/products',
+      url: `https://aliexpress.andagna.com/wp-json/wc/v3/customers/${id}`,
       auth: {
           'user': 'ck_f698c13cdafb13d2dcf2ba42257522537bdff188',
           'pass': 'cs_97eb40b7df1e997925d5b9181f6ac080a308ac95'
@@ -42,7 +89,77 @@ function getProducts() {
     };
     //console.log(options);
     request(options, function (error, response) {
-      if (error) throw new Error(error);
+      if (error) resolve(error);
+      // console.log("***********");
+      //console.log("BODY", response.body);
+      // console.log(typeof response.body);
+      let result = JSON.parse(response.body);
+      // console.log(result);
+      // console.log("*****************");
+      resolve(result);
+    });
+  });
+}
+//========= get products
+function getProducts(page, per_page) {
+  return new Promise((resolve, reject) => {
+    var options = {
+      url: `https://aliexpress.andagna.com/wp-json/wc/v3/products?per_page=${per_page}&page=${page}`,
+      auth: {
+          'user': 'ck_f698c13cdafb13d2dcf2ba42257522537bdff188',
+          'pass': 'cs_97eb40b7df1e997925d5b9181f6ac080a308ac95'
+      }
+    };
+    //console.log(options);
+    request(options, function (error, response) {
+      if (error) resolve(error);
+      // console.log("***********");
+      //console.log("BODY", response.body);
+      // console.log(typeof response.body);
+      let result = JSON.parse(response.body);
+      // console.log(result);
+      // console.log("*****************");
+      resolve(result);
+    });
+  });
+}
+//========= list products by category
+function getProductsByCategory(page, per_page, category) {
+  return new Promise((resolve, reject) => {
+    var options = {
+      url: `https://aliexpress.andagna.com/wp-json/wc/v3/products?per_page=${per_page}&page=${page}&category=${category}`,
+      auth: {
+          'user': 'ck_f698c13cdafb13d2dcf2ba42257522537bdff188',
+          'pass': 'cs_97eb40b7df1e997925d5b9181f6ac080a308ac95'
+      }
+    };
+    //console.log(options);
+    request(options, function (error, response) {
+      if (error) resolve(error);
+      // console.log("***********");
+      //console.log("BODY", response.body);
+      // console.log(typeof response.body);
+      let result = JSON.parse(response.body);
+      // console.log(result);
+      // console.log("*****************");
+      resolve(result);
+    });
+  });
+}
+//========= get single products
+function getProductSingle(id) {
+  console.log("here id received "+ id)
+  return new Promise((resolve, reject) => {
+    var options = {
+      url: 'https://aliexpress.andagna.com/wp-json/wc/v3/products/'+id,
+      auth: {
+          'user': 'ck_f698c13cdafb13d2dcf2ba42257522537bdff188',
+          'pass': 'cs_97eb40b7df1e997925d5b9181f6ac080a308ac95'
+      }
+    };
+    //console.log(options);
+    request(options, function (error, response) {
+      if (error) resolve(error);
       // console.log("***********");
       //console.log("BODY", response.body);
       // console.log(typeof response.body);
@@ -65,7 +182,7 @@ function getCategory() {
     };
     //console.log(options);
     request(options, function (error, response) {
-      if (error) throw new Error(error);
+      if (error) resolve(error);
       // console.log("***********");
       //console.log("BODY", response.body);
       // console.log(typeof response.body);
@@ -174,21 +291,179 @@ app.post("/apply/h5token", function (req, res) {
 app.post("/create/order", function (req, res) {
   createOrder.createOrder(req, res);
 });
+//woo product section
+app.get("api/list", async function (req, res) {
+  console.log("RECEIVED PARAM")
+  console.log(req)
+  // List products
+  var allProducts = await getProducts();
+  res.status(200).json({code: 0, data: allProducts, msg: 'success' });
+});
+
+//wooo end
 
 //for testing
- app.get("/api/listen", async (req, res) => {
-   
-  var userToken = await applyUserToken();
+//signup
+app.post("/api/register", async (req, res) => {
+  var username = req.body.username;
+  var email = req.body.email;
+  var password = req.body.password;
+  var response = await registerUser(username,email, password);
+   res.status(200).json(response);
+ });
+ //login
+ app.post("/api/listen", async (req, res) => {
+  var username = req.body.username;
+  var password = req.body.password;
+  var userToken = await applyUserToken(username, password);
    res.status(200).json({ usertoken: userToken });
  });
+ //====================== wooo rest api =======
+ app.get("/api/woo", async (req, res) => {
+  // List products
+  var resData = []
+  await api.get("products", {
+    per_page: 2, // 20 products per page
+  })
+  .then((response) => {
+    // Successful request
+    resData = response.data
+   // console.log("Response Status:", response.status);
+    //console.log("Response Headers:", response.headers);
+    //console.log("Response Data:", response.data);
+   // console.log("Total of pages:", response.headers['x-wp-totalpages']);
+   // console.log("Total of items:", response.headers['x-wp-total']);
+  })
+  .catch((error) => {
+    // Invalid request, for 4xx and 5xx statuses
+    //console.log("Response Status:", error.response.status);
+    //console.log("Response Headers:", error.response.headers);
+    console.log("Response Data:", error.response.data);
+  })
+  .finally(() => {
+    // Always executed.
+  });
+   res.status(200).json({code: 0, data: resData, msg: 'success' });
+ });
+ //================== end =====================
  //========
  //for product
  app.get("/api/products", async (req, res) => {
-   
+  console.log("RECEIVED PARAM")
+  
   var allProducts = await getProducts();
    res.status(200).json({ allProducts: allProducts });
  });
-
+ app.post("/api/products", async (req, res) => {
+  console.log("RECEIVED PARAMO")
+  // Define the object 
+  const inputObject = req.body; // Convert the object key to a string 
+  const jsonString = Object.keys(inputObject)[0]; // Remove the last characters 
+  console.log(jsonString)
+  const trimmedString =JSON.parse(jsonString);
+  var page = trimmedString.page
+  var per_page = trimmedString.pageSize
+  console.log(page +" and "+ per_page)
+  var allProducts = await getProducts(page, per_page);
+   res.status(200).json({ allProducts: allProducts });
+ });
+ //list by category 
+ app.post("/api/list", async (req, res) => {
+  console.log("RECEIVED PARAM for category list")
+  // Define the object 
+  const inputObject = req.body; // Convert the object key to a string 
+  const jsonString = Object.keys(inputObject)[0]; // Remove the last characters 
+  console.log(jsonString)
+  const trimmedString =JSON.parse(jsonString);
+  var page = trimmedString.page
+  var per_page = trimmedString.pageSize
+  var category = trimmedString.categoryId
+  console.log(page +" and "+ per_page+"=="+category)
+  var allProducts = await getProductsByCategory(page, per_page, category);
+   res.status(200).json({ allProducts: allProducts });
+ });
+ //get single product
+ app.post("/api/detail", async (req, res) => {
+  console.log("RECEIVED DATA for single product")
+  // Define the object 
+  const inputObject = req.body; // Convert the object key to a string 
+  const jsonString = Object.keys(inputObject)[0]; // Remove the last characters 
+  console.log(jsonString)
+  const trimmedString =JSON.parse(jsonString);
+  var id = trimmedString
+  console.log(id)
+  var item = await getProductSingle(id);
+   res.status(200).json({ allProducts: item });
+ });
+ //get Customers  
+ app.post("/api/customer", async (req, res) => {
+  console.log("RECEIVED PARAM for get customer")
+  // Define the object 
+  const inputObject = req.body; // Convert the object key to a string 
+  const jsonString = Object.keys(inputObject)[0]; // Remove the last characters 
+  console.log(jsonString)
+  const trimmedString =JSON.parse(jsonString);
+  var id = trimmedString.token
+  console.log(id)
+  var customer = await getCustomerDetail(id);
+   res.status(200).json({ data: customer });
+ });
+ //update customer address
+ app.post("/api/address", async (req, res) => {
+  console.log("RECEIVED PARAM for Address")
+  var addressData = []
+  // Define the object 
+  const inputObject = req.body; // Convert the object key to a string 
+  const jsonString = Object.keys(inputObject)[0]; // Remove the last characters 
+  console.log(jsonString)
+  const trimmedString =JSON.parse(jsonString);
+  console.log(trimmedString)
+  var data = {
+    shipping: trimmedString.shipping
+  };
+  console.log(data)
+  var id = trimmedString.id
+  console.log(id)
+  var endPoint = "customers/" + id
+  api.put(endPoint, data)
+  .then((response) => {
+    addressData = response.data
+    //console.log(response.data);
+  })
+  .catch((error) => {
+    addressData = error
+    console.log(error.response.data);
+  });
+  //var customer = await getCustomerDetail(id);
+   res.status(200).json({ data: addressData });
+ });
+ //get orders
+ app.post("/api/order/list", async (req, res) => {
+  console.log("RECEIVED PARAM for orders")
+  
+  // Define the object 
+  const inputObject = req.body; // Convert the object key to a string 
+  const jsonString = Object.keys(inputObject)[0]; // Remove the last characters 
+  console.log(jsonString)
+  const trimmedString =JSON.parse(jsonString);
+  console.log(trimmedString)
+  
+  //console.log(data)
+  var id = trimmedString.token
+  console.log(id)
+  var endPoint = "orders"
+  api.get(endPoint, { customer: id })
+  .then((response) => {
+    
+    res.status(200).json({ data: response.data });
+    console.log(response.data);
+  })
+  .catch((error) => {
+    res.status(200).json({ data: error.response.data });
+    console.log(error.response.data);
+  });
+  //var customer = await getCustomerDetail(id);
+ });
  //for categories
  app.get("/api/category", async (req, res) => {
    
@@ -225,5 +500,5 @@ app.put("/api/v1/notify", (req, res) => {
 let serverPort = process.env.PORT | 8081;
 var app = app.listen(serverPort, function () {
   console.log("server started, port:" + serverPort);
-  console.log(networkInterfaces);
+  //console.log(networkInterfaces);
 });
