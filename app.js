@@ -151,7 +151,7 @@ function getProductSingle(id) {
   console.log("here id received "+ id)
   return new Promise((resolve, reject) => {
     var options = {
-      url: 'https://aliexpress.andagna.com/wp-json/wc/v3/products/'+id,
+      url: 'https://aliexpress.andagna.com/wp-json/wc/v3/products',
       auth: {
           'user': 'ck_f698c13cdafb13d2dcf2ba42257522537bdff188',
           'pass': 'cs_97eb40b7df1e997925d5b9181f6ac080a308ac95'
@@ -159,12 +159,12 @@ function getProductSingle(id) {
     };
     //console.log(options);
     request(options, function (error, response) {
-      if (error) resolve(error);
+      if (error) throw new Error(error);
       // console.log("***********");
       //console.log("BODY", response.body);
       // console.log(typeof response.body);
       let result = JSON.parse(response.body);
-      // console.log(result);
+       //console.log(result);
       // console.log("*****************");
       resolve(result);
     });
@@ -184,7 +184,7 @@ function getCategory() {
     request(options, function (error, response) {
       if (error) resolve(error);
       // console.log("***********");
-      //console.log("BODY", response.body);
+      console.log("BODY", response.body);
       // console.log(typeof response.body);
       let result = JSON.parse(response.body);
       // console.log(result);
@@ -221,32 +221,32 @@ var sliderList = [
   {
     id: 1,
     picurl: "https://ae01.alicdn.com/kf/S6645b6fd8c684c6883d3de87aaff8971Q/444x280.png",
-    title: "diamond_1",
+    title: "jewelery",
   },
   {
     id: 2,
     picurl: "https://ae01.alicdn.com/kf/S92d630fabc0942c4b408615a25cf1929V/960x557.jpg",
-    title: "diamond_2",
+    title: "Electronics",
   },
   {
     id: 3,
     picurl: "https://cdn.it120.cc/apifactory/2019/06/18/06b337d7-92a1-498b-8142-5c5951e8fb97.jpg",
-    title: "diamond_3",
+    title: "Promotion",
   },
   {
     id: 4,
     picurl: "https://cdn.it120.cc/apifactory/2019/06/18/4c458676-85bb-4271-91a6-79ed9fc47545.jpg",
-    title: "diamond_4",
+    title: "Ecommerce",
   },
   {
     id: 5,
     picurl: "https://dcdn.it120.cc/2022/02/02/d0442c95-cd44-435a-888d-2539c5399334.png",
-    title: "diamond_5",
+    title: "aliexpress",
   },
   {
     id: 6,
     picurl: "https://dcdn.it120.cc/2022/05/05/ac956ae3-151f-418e-b0e9-fadd76a9ea6d.jpeg",
-    title: "diamond_6",
+    title: "shopping",
   },
 ]
 function getBanners() {
