@@ -34,7 +34,7 @@ function applyUserToken(username , password) {
     request(options, function (error, response) {
       if (error) throw new Error(error);
       console.log("****** WP TOKEN *****");
-      console.log("BODY", response.body);
+      //console.log("BODY", response.body);
       // console.log(typeof response.body);
       let result = JSON.parse(response.body);
       // console.log(result);
@@ -185,7 +185,7 @@ function getCategory() {
     request(options, function (error, response) {
       if (error) resolve(error);
       // console.log("***********");
-      console.log("BODY", response.body);
+      //console.log("BODY", response.body);
       // console.log(typeof response.body);
       let result = JSON.parse(response.body);
       // console.log(result);
