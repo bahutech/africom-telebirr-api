@@ -409,6 +409,31 @@ app.post("/api/register", async (req, res) => {
   var customer = await getCustomerDetail(id);
    res.status(200).json({ data: customer });
  });
+ //get Customers by email
+ app.post("/api/customer/info", async (req, res) => {
+  console.log("RECEIVED PARAM for get customer by email")
+  // Define the object 
+  const inputObject = req.body; // Convert the object key to a string 
+  const jsonString = Object.keys(inputObject)[0]; // Remove the last characters 
+  console.log(jsonString)
+  const trimmedString =JSON.parse(jsonString);
+  console.log(trimmedString)
+  
+  //console.log(data)
+  var id = trimmedString.email
+  console.log(id)
+  var endPoint = "customers"
+  api.get(endPoint, { email: id })
+  .then((response) => {
+    
+    res.status(200).json({ data: response.data });
+    //console.log(response.data);
+  })
+  .catch((error) => {
+    res.status(200).json({ data: error.response.data });
+    console.log(error.response.data);
+  });
+ });
  //update customer address
  app.post("/api/address", async (req, res) => {
   console.log("RECEIVED PARAM for Address")
