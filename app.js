@@ -391,10 +391,21 @@ app.post("/api/register", async (req, res) => {
   const jsonString = Object.keys(inputObject)[0]; // Remove the last characters 
   console.log(jsonString)
   const trimmedString =JSON.parse(jsonString);
-  var id = trimmedString
-  console.log(id)
-  var item = await getProductSingle(id);
-   res.status(200).json({ allProducts: item });
+  var idProduct = trimmedString
+  console.log(idProduct)
+  //var item = await getProductSingle(id);
+   //res.status(200).json({ allProducts: item });
+   var endPoint = "products"
+  api.get(endPoint, { id: idProduct })
+  .then((response) => {
+    
+    res.status(200).json({ allProducts: response.data });
+    //console.log(response.data);
+  })
+  .catch((error) => {
+    res.status(200).json({ allProducts: error.response.data });
+    console.log(error.response.data);
+  });
  });
  //get Customers  
  app.post("/api/customer", async (req, res) => {
