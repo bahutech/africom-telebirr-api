@@ -395,8 +395,8 @@ app.post("/api/register", async (req, res) => {
   console.log(idProduct)
   //var item = await getProductSingle(id);
    //res.status(200).json({ allProducts: item });
-   var endPoint = "products"
-  api.get(endPoint, { id: idProduct })
+   var endPoint = "products/"+idProduct
+  api.get(endPoint)
   .then((response) => {
     
     res.status(200).json({ allProducts: response.data });
