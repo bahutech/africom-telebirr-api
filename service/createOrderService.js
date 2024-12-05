@@ -61,7 +61,7 @@ function createRequestObject(title, amount) {
   };
   let biz = {
     // notify_url: "https://node-api-muxu.onrender.com/api/v1/notify",
-    notify_url: "https://node-api-muxu.onrender.com/api/v1/notify",
+    notify_url: "https://goldfish-app-b8tlt.ondigitalocean.app/pay/api/v1/notify",
     trade_type: "InApp",
     appid: config.merchantAppId,
     merch_code: config.merchantCode,

@@ -523,7 +523,7 @@ app.post("/api/register", async (req, res) => {
  //========
 app.post("/api/v1/notify", (req, res) => {
   console.log("Notify Response Hits HERE!");
-  // console.log({ REQ_BODY: req });
+  console.log({ REQ_BODY: req });
   res.status(201).json({ body: req.body });
 });
 
