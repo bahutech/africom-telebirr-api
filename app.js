@@ -536,5 +536,5 @@ app.put("/api/v1/notify", (req, res) => {
 let serverPort = process.env.PORT | 8081;
 var app = app.listen(serverPort, function () {
   console.log("server started, port:" + serverPort);
-  console.log(networkInterfaces);
+  //console.log(networkInterfaces);
 });
