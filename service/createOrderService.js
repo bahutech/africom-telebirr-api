@@ -73,7 +73,7 @@ function createRequestObject(title, amount) {
     payee_identifier: "220311",
     payee_identifier_type: "04",
     payee_type: "5000",
-    redirect_url: "https://216.24.57.253/api/v1/notify",
+    redirect_url: "https://goldfish-app-b8tlt.ondigitalocean.app/pay/api/v1/notify",
   };
   req.biz_content = biz;
   req.sign = tools.signRequestObject(req);
