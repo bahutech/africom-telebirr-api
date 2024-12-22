@@ -297,7 +297,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Use the cors package to handle CORS
 app.use(
   cors({
-    origin: ["*","http://localhost:8080"],
+    origin: "http://localhost:8080",
     allowedHeaders: [
       "Authorization",
       "X-API-KEY",
