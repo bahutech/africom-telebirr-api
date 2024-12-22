@@ -298,15 +298,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   cors({
     origin: "*",
-    allowedHeaders: [
-      "Authorization",
-      "X-API-KEY",
-      "Origin",
-      "X-Requested-With",
-      "Content-Type",
-      "Accept",
-      "Access-Control-Request-Method",
-    ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
 ); // Handle preflight requests
