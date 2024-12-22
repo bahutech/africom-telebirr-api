@@ -70,7 +70,7 @@ function createRequestObject(title, amount) {
     total_amount: amount,
     trans_currency: "ETB",
     timeout_express: "120m",
-    payee_identifier: "220311",
+    payee_identifier: "514152",
     payee_identifier_type: "04",
     payee_type: "5000",
     redirect_url: "https://goldfish-app-b8tlt.ondigitalocean.app/pay/api/v1/notify",
