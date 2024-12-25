@@ -509,7 +509,8 @@ app.post("/api/register", async (req, res) => {
   console.log("RECEIVED PARAM for Create orders")
   const data = {
     payment_method: "bacs",
-    payment_method_title: "Direct Bank Transfer",
+    payment_method_title: "via telebirr",
+    status: "Pending payment",
     set_paid: true,
     billing: {
       first_name: "John",
