@@ -510,7 +510,7 @@ app.post("/api/register", async (req, res) => {
   const data = {
     payment_method: "bacs",
     payment_method_title: "via telebirr",
-    status: "Pending payment",
+    status: "checkout-draft",
     set_paid: true,
     billing: {
       first_name: "John",
