@@ -530,7 +530,7 @@ app.post("/api/register", async (req, res) => {
  });
  //update order status
  app.post("/api/order/status", async (req, res) => {
-  console.log("RECEIVED PARAM for Address")
+  console.log("RECEIVED PARAM for order status")
   // Define the object 
   const inputObjectOS = req.body; // Convert the object key to a string 
   const jsonStringOS = Object.keys(inputObjectOS)[0]; // Remove the last characters 
