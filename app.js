@@ -512,12 +512,12 @@ app.post("/api/register", async (req, res) => {
   const inputObjectO = req.body; // Convert the object key to a string 
   const jsonStringO = Object.keys(inputObjectO)[0]; // Remove the last characters 
   console.log(jsonStringO)
-  /*const trimmedString =JSON.parse(jsonString);
+  var trimmedString =JSON.parse(jsonStringO);
   console.log(trimmedString)
   
-  var id = trimmedString.token
+  /*var id = trimmedString.trimmedString
   console.log(req.body) */
-  api.post("orders", jsonStringO)
+  api.post("orders", trimmedString)
   .then((response) => {
     console.log(response.data);
     res.json(response.data)
