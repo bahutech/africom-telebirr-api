@@ -509,15 +509,15 @@ app.post("/api/register", async (req, res) => {
   console.log("RECEIVED PARAM for Create orders")
   
   // Define the object 
-  //const inputObjectO = req.body; // Convert the object key to a string 
-  //const jsonStringO = Object.keys(inputObjectO)[0]; // Remove the last characters 
-   //console.log(req.body)
+  const inputObjectO = req.body; // Convert the object key to a string 
+  const jsonStringO = Object.keys(inputObjectO)[0]; // Remove the last characters 
+  console.log(jsonStringO)
   /*const trimmedString =JSON.parse(jsonString);
   console.log(trimmedString)
   
   var id = trimmedString.token
   console.log(req.body) */
-  api.post("orders", req.body)
+  api.post("orders", jsonStringO)
   .then((response) => {
     console.log(response.data);
     res.json(response.data)
