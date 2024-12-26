@@ -520,9 +520,11 @@ app.post("/api/register", async (req, res) => {
   api.post("orders", req.body)
   .then((response) => {
     console.log(response.data);
+    res.json(response.data)
   })
   .catch((error) => {
     console.log(error.response.data);
+    res.json(error.response.data)
   });
   //var customer = await getCustomerDetail(id);
  });
