@@ -564,9 +564,9 @@ app.post("/api/register", async (req, res) => {
   console.log(req.body) */
   api.post("orders", jsonString)
   .then((response) => {
-    
-    res.status(200).json({ data: response.data });
-    //console.log(response.data);
+    console.log(response.data.id);
+    res.status(200).json({ data: response.data.id });
+    //
   })
   .catch((error) => {
     res.status(200).json({ data: error.response.data });
