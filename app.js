@@ -562,7 +562,7 @@ app.post("/api/register", async (req, res) => {
   
   var id = trimmedString.token
   console.log(req.body) */
-  api.post("orders", data)
+  api.post("orders", jsonString)
   .then((response) => {
     
     res.status(200).json({ data: response.data });
