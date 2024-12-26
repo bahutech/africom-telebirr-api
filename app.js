@@ -517,7 +517,7 @@ app.post("/api/register", async (req, res) => {
   
   var id = trimmedString.token
   console.log(req.body) */
-  WooCommerce.post("orders", req.body)
+  api.post("orders", req.body)
   .then((response) => {
     console.log(response.data);
   })
