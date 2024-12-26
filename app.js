@@ -511,7 +511,7 @@ app.post("/api/register", async (req, res) => {
   // Define the object 
   //const inputObjectO = req.body; // Convert the object key to a string 
   //const jsonStringO = Object.keys(inputObjectO)[0]; // Remove the last characters 
-   console.log(req.body)
+   //console.log(req.body)
   /*const trimmedString =JSON.parse(jsonString);
   console.log(trimmedString)
   
@@ -527,6 +527,34 @@ app.post("/api/register", async (req, res) => {
     res.json(error.response.data)
   });
   //var customer = await getCustomerDetail(id);
+ });
+ //update order status
+ app.post("/api/order/status", async (req, res) => {
+  console.log("RECEIVED PARAM for Address")
+  // Define the object 
+  const inputObjectOS = req.body; // Convert the object key to a string 
+  const jsonStringOS = Object.keys(inputObjectOS)[0]; // Remove the last characters 
+  console.log(jsonStringOS)
+  const trimmedStringOS =JSON.parse(jsonStringOS);
+  console.log(trimmedStringOS.id)
+  var data = {
+    status: "processing"
+  };
+  //console.log(data)
+  var id = trimmedStringOS.id
+  console.log(id)
+  var endPoint = "orders/" + id
+  api.put(endPoint, data)
+  .then((response) => {
+    res.status(200).json({ data: response.data });
+    //console.log(response.data);
+  })
+  .catch((error) => {
+    res.status(200).json({ data: error.response.data });
+    console.log(error.response.data);
+  });
+  //var customer = await getCustomerDetail(id);
+   
  });
  //for categories
  app.get("/api/category", async (req, res) => {
