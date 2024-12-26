@@ -507,69 +507,21 @@ app.post("/api/register", async (req, res) => {
  //create orders
  app.post("/api/order/create", async (req, res) => {
   console.log("RECEIVED PARAM for Create orders")
-  const data = {
-    payment_method: "bacs",
-    payment_method_title: "via telebirr",
-    status: "checkout-draft",
-    set_paid: true,
-    billing: {
-      first_name: "John",
-      last_name: "Doe",
-      address_1: "969 Market",
-      address_2: "",
-      city: "San Francisco",
-      state: "CA",
-      postcode: "94103",
-      country: "US",
-      email: "john.doe@example.com",
-      phone: "(555) 555-5555"
-    },
-    shipping: {
-      first_name: "John",
-      last_name: "Doe",
-      address_1: "969 Market",
-      address_2: "",
-      city: "San Francisco",
-      state: "CA",
-      postcode: "94103",
-      country: "US"
-    },
-    line_items: [
-      {
-        product_id: 93,
-        quantity: 2
-      },
-      {
-        product_id: 22,
-        variation_id: 23,
-        quantity: 1
-      }
-    ],
-    shipping_lines: [
-      {
-        method_id: "flat_rate",
-        method_title: "Flat Rate",
-        total: "10.00"
-      }
-    ]
-  };
+  
   // Define the object 
-  const inputObject = req.body; // Convert the object key to a string 
-  const jsonString = Object.keys(inputObject)[0]; // Remove the last characters 
-   console.log(jsonString)
+  //const inputObjectO = req.body; // Convert the object key to a string 
+  //const jsonStringO = Object.keys(inputObjectO)[0]; // Remove the last characters 
+   console.log(req.body)
   /*const trimmedString =JSON.parse(jsonString);
   console.log(trimmedString)
   
   var id = trimmedString.token
   console.log(req.body) */
-  api.post("orders", jsonString)
+  WooCommerce.post("orders", req.body)
   .then((response) => {
-    console.log(response.data.id);
-    res.status(200).json({ data: response.data.id });
-    //
+    console.log(response.data);
   })
   .catch((error) => {
-    res.status(200).json({ data: error.response.data });
     console.log(error.response.data);
   });
   //var customer = await getCustomerDetail(id);
